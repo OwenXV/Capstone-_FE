@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button } from 'bootstrap'
 import { Container, Form } from 'react-bootstrap'
-import { Nav } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
 
 const Home = () => {
