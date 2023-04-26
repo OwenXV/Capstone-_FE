@@ -1,0 +1,27 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  background-color: #171717;
+  font-family: 'Roboto';
+}
+
+.navibar{
+  height: 80px;
+  background-color:black;
+}
+.offCan{
+  background-color: #3D3C3A;
+}
+
+#heroVid{
+  width: 100% !important;
+  height: auto !important;
+  position: relative;
+}
+
+.navbar-toggler-icon{
+  filter:invert(80)
