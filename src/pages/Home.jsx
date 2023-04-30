@@ -37,9 +37,11 @@ const Home = () => {
                   <Nav className="justify-content-end flex-grow-1 pe-3 text-white">
                     <Nav.Link href="/Home"className="text-white fs-5">Categories</Nav.Link>
                     <Nav.Link href="/Home" className="text-white fs-5">Property</Nav.Link>
-                    <Nav.Link href="/Home" className="text-white fs-5">Register</Nav.Link>
+                    <Nav.Link href="/Register" className="text-white fs-5">Register</Nav.Link>
                     <Nav.Link href="/Home" className="text-white fs-5">Login</Nav.Link>
-                    <Nav.Link href="/Home" className="text-white fs-5">Sell</Nav.Link>
+                    <Nav.Link href="/Home" className="text-white fs-5">
+                      <span>Sell</span>
+                    </Nav.Link>
                   </Nav>  
                 </Offcanvas.Body>
               </Navbar.Offcanvas>
