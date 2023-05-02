@@ -3,7 +3,7 @@ import { Button } from 'bootstrap'
 import { Container, Form } from 'react-bootstrap'
 import { Navbar, Nav } from 'react-bootstrap'
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import brandicon from '../assets/brandicon.png'
+import buy from '../assets/buy.png'
 
 
 const Home = () => {
@@ -15,11 +15,8 @@ const Home = () => {
               <Navbar.Brand href="#" className="text-white d-flex align-items-center">
                 <img
                   alt=""
-                  src={brandicon}
-                  width="60"
-                  height="60"
+                  src={buy}
                   />
-                  <h3 className="px-1">BentaPH</h3>
               </Navbar.Brand>
               <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
               <Navbar.Offcanvas
