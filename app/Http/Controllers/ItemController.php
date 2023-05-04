@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Item;
 
 class ItemController extends Controller
 {
@@ -11,7 +12,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        return Item::all();
     }
 
     /**
@@ -19,7 +20,16 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+        'name' => 'required',
+        'image' => 'required',
+        'description' => 'required',
+        'price' => 'required'
+
+        ]);
+
+
+        return Item::create($request->all());
     }
 
     /**
@@ -27,7 +37,7 @@ class ItemController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Item::find($id);
     }
 
     /**
@@ -35,7 +45,9 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = Item::find($id);
+        $item->update($request->all());
+        return $item;
     }
 
     /**
@@ -43,6 +55,17 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return Item::destroy($id);
     }
+
+
+    // @param str $name
+    // @return \Illuminate\Http\Response
+
+    public function search($name)
+{
+    return Item::where('name', 'like', '%' .$name. '%')->get();
+}
+    
+    
 }
