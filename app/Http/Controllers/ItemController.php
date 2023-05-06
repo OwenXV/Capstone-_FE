@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\Item;
+use App\Models\User;
+use App\Http\Resources\ItemShowResource;
+use App\Http\Resources\UserItemResource;
+
 
 class ItemController extends Controller
 {
@@ -20,7 +25,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $fields = $request->validate([
         'name' => 'required',
         'image' => 'required',
         'description' => 'required',
@@ -28,8 +33,16 @@ class ItemController extends Controller
 
         ]);
 
+        $item =Item::create([
+            'user_id' => auth()->user()->id,
+            'name' => $fields ['name'],
+            'image' => $fields ['image'],
+            'description' => $fields ['description'],
+            'price' => $fields ['price']
+        ]);
 
-        return Item::create($request->all());
+
+        return response($item, 201);
     }
 
     /**
@@ -45,11 +58,20 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
+
+        $fields = $request->validate([
+            'name' => 'required|string',
+            'image' => 'nullable|string',
+            'description' => 'required|string',
+            'price' => 'nullable|string'
+        ]);
+
         $item = Item::find($id);
         $item->update($request->all());
-        return $item;
-    }
 
+        return response ($item, 200);
+    }
     /**
      * Remove the specified resource from storage.
      */

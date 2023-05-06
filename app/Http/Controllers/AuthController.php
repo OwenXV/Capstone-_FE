@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -13,12 +16,22 @@ class AuthController extends Controller
     {
         $fields = $request->validate([
             'name' => 'required|string',
+            'username' => 'required|string',
+            'profile_picture' => 'required|string',
+            'adress' => 'required|string',
+            'seller-description' => 'required|string',
             'email' => 'required|string|unique:users|email',
-            'password' => 'required|string|confirmed'
+            'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:6'
+           
         ]);
 
         $user = User::create([
             'name' => $fields['name'],
+            'username' => $fields['username'],
+            'profile_picture' => $fields['profile_picture'],
+            'adress' => $fields[ 'adress'],
+            'seller-description' => $fields['seller-description'],
             'email' => $fields['email'],
             'password' => bcrypt($fields['password'])
         ]);
