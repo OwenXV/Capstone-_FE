@@ -24,7 +24,7 @@ class User extends Authenticatable
         'username',
         'profile_picture',
         'adress',
-        'seller-description',
+        'seller_description',
         'email',
         'password',
     ];

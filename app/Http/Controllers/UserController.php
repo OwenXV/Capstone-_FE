@@ -21,40 +21,13 @@ class UserController extends Controller
         'username'=> 'required',
         'profile_picture'=> 'required',
         'adress' => 'required',
-        'seller-description' => 'required',
+        'seller_description' => 'required',
         'email' => 'required',
         'password' => 'required'
         ]);
         
-        return User::create($request->all());
+        return Item::create($request->all());
     }
-
-
-    public function show(string $id)
-    {
-        return User::find($id);
-    }
-
-
-    public function update(Request $request, string $id)
-    {
-        $user = User::find($id);
-        $user->update($request->all());
-        return $user;
-    }
-
-
-    public function destroy(string $id)
-    {
-        return User::destroy($id);
-    }
-
-
-    public function search($name)
-    {
-        return User::where('name', 'like', '%' .$name. '%')->get();
-    }
-        
 
 
 

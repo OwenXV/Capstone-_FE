@@ -33,7 +33,6 @@ Route::get('users', [UserController::class, 'index']);
 Route::group(['middleware' => ['auth:sanctum']], function() {
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::put('/users/profile', [UserController::class, 'updateProfilePicture']);
-Route::resource('users', UserController::class);
 Route::post('/items', [ItemController::class, 'store']);
 Route::put('/items/{id}', [ItemController::class, 'update']);
 

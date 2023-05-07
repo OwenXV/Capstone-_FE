@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('profile_picture');
             $table->string('adress');
-            $table->text('seller-description');
+            $table->text('seller_description');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

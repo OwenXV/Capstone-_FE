@@ -6,35 +6,42 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserStoreRequest;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function register(Request $request) 
+    public function register(UserStoreRequest $request) 
     {
         $fields = $request->validate([
             'name' => 'required|string',
             'username' => 'required|string',
-            'profile_picture' => 'required|string',
+            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'adress' => 'required|string',
-            'seller-description' => 'required|string',
+            'seller_description' => 'required|string',
             'email' => 'required|string|unique:users|email',
             'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'min:6'
            
         ]);
 
+        $imageName = Str::random(32).".".$request->profile_picture->getClientOriginalExtension();
+
         $user = User::create([
             'name' => $fields['name'],
             'username' => $fields['username'],
-            'profile_picture' => $fields['profile_picture'],
+            'profile_picture' => $imageName,
             'adress' => $fields[ 'adress'],
-            'seller-description' => $fields['seller-description'],
+            'seller_description' => $fields['seller_description'],
             'email' => $fields['email'],
             'password' => bcrypt($fields['password'])
         ]);
+
+        Storage::disk('public')->put($imageName, file_get_contents($request->profile_picture));
 
         $token = $user->createToken('mySecretKey')->plainTextToken;
 
