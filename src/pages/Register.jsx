@@ -1,6 +1,6 @@
 import Form from 'react-bootstrap/Form'
 import { Row, Col,Container } from "react-bootstrap"
-import buy from '../assets/buy.png'
+import regphoto from '../assets/regphoto.jpg'
 
 
 const Register = () => {
@@ -9,7 +9,7 @@ const Register = () => {
       <Container>
         <Row>
           <Col>
-            <img src={buy} alt="photo" height='800px'/>
+            <img src={regphoto} alt="photo" height='800px'/>
           </Col>
           <Col>
             <Form>
