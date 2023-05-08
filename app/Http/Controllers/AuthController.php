@@ -29,19 +29,22 @@ class AuthController extends Controller
            
         ]);
 
-        $imageName = Str::random(32).".".$request->profile_picture->getClientOriginalExtension();
+        $image_name = Str::random(32).".".$request->profile_picture->getClientOriginalExtension();
 
         $user = User::create([
             'name' => $fields['name'],
             'username' => $fields['username'],
-            'profile_picture' => $imageName,
+            'profile_picture' => $image_name,
             'adress' => $fields[ 'adress'],
             'seller_description' => $fields['seller_description'],
             'email' => $fields['email'],
             'password' => bcrypt($fields['password'])
         ]);
 
-        Storage::disk('public')->put($imageName, file_get_contents($request->profile_picture));
+
+        $request->profile_picture->move(storage_path('app/public/images'), $image_name);
+
+        // Storage::disk('public')->put($imageName, file_get_contents($request->profile_picture));
 
         $token = $user->createToken('mySecretKey')->plainTextToken;
 
@@ -53,6 +56,22 @@ class AuthController extends Controller
         return response($response, 201);
         
     }
+
+
+
+    public function getImage($filename) {
+        $imagePath = storage_path('app/public/images/' . $filename);
+
+        if (file_exists($imagePath)) {
+           $image = file_get_contents($imagePath);
+           return response($image, 200)->header('Content-Type', 'image/jpg');
+        }
+        return response()->json(['message' => 'Image not found.'], 404);
+    }
+
+
+
+
 
     /**
      * Store a newly created resource in storage.

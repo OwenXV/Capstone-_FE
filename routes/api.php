@@ -28,7 +28,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('users', [UserController::class, 'index']);
 // Route::resource('items', UserController::class);
-
+Route::get('/profile_picture/{image}', [AuthController::class, 'getImage'])->where('profile_picture', '.*');
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
 Route::post('/logout', [AuthController::class, 'logout']);

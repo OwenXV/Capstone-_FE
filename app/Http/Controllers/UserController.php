@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -28,6 +30,28 @@ class UserController extends Controller
         
         return Item::create($request->all());
     }
+
+
+
+
+    
+
+
+    // public function getImage($filename) {
+
+
+    //     // $imagePath = storage_path('app/storage/app/public/' . $filename);
+       
+    //      $imagePath = Storage::disk('public/' . $filename);
+       
+       
+
+    //     if (file_exists($imagePath)) {
+    //        $image = file_get_contents($imagePath);
+    //        return response($image, 200)->header('Content-Type', 'image/jpg');
+    //     }
+    //     return response()->json(['message' => 'Image not found.'], 404);
+    // }
 
 
 
