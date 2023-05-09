@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Item;
 use App\Models\User;
 use App\Http\Resources\ItemShowResource;
-use App\Http\Resources\UserItemResource;
+use App\Http\Resources\ItemResource;
 use App\Http\Requests\ItemStoreRequest;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 
 class ItemController extends Controller
@@ -18,9 +19,21 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Item::all();
+        $order = $request->query('order') ? $request->query('order') : 'desc';
+
+        return ItemResource::collection(Item::select('id', 'user_id','name','image','description','price', 'created_at', 'updated_at')
+            ->orderBy('created_at', $order)
+            ->paginate(5));
+    }
+
+
+
+    public function getUserItems(string $id) {
+        $items = Item::where('user_id', $id)->orderBy('created_at', 'desc')->paginate(5);
+
+        return ItemResource::collection($items);
     }
 
     /**
@@ -55,69 +68,21 @@ class ItemController extends Controller
         } catch (\Exception $e) {
             //Return Json Response
             return response()->json([
-                'message' => "Something went really wrong!"
+                'message' => "Review successfully posted!"
             ],500);
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // $fields = $request->validate([
-        // 'name' => 'required',
-        // 'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
-        // 'description' => 'required',
-        // 'price' => 'required'
-
-        // ]);
-
-        // $image_name = time() . '.' . $request->image->extension();
-        // $request->image->move(storage_path('app/public/images'), $image_name);
-
-        // $response = [
-        //     'image_name' => $image_name
-        // ];
-
-        // $item =Item::create([
-        //     'user_id' => auth()->user()->id,
-        //     'name' => $fields ['name'],
-        //     'image' => $fields ['image'],
-        //     'description' => $fields ['description'],
-        //     'price' => $fields ['price']
-        // ]);
-
-
-        // return response($item, 201);
     }
 
 
-    // public function getImage($filename) {
-    //     $imagePath = storage_path('app/public/images/' . $filename);
-
-    //     if (file_exists($imagePath)) {
-    //        $image = file_get_contents($imagePath);
-    //        return response($image, 200)->header('Content-Type', 'image/jpg');
-    //     }
-    //     return response()->json(['message' => 'Image not found.'], 404);
-    // }
-
+   
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        return Item::find($id);
+        return response(ItemShowResource::make(Item::find($id)), 200);
     }
 
     /**

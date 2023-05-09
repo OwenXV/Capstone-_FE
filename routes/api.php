@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\RevController;
 
 
 /*
@@ -22,6 +23,7 @@ use App\Http\Controllers\ImageController;
 // Route::post('/items', [ItemController::class, 'store']);
 
 Route::get('items', [ItemController::class, 'index']);
+Route::get('items/{id}', [ItemController::class, 'show']);
 
 // Route::resource('users', UserController::class);
 Route::post('/register', [AuthController::class, 'register']);
@@ -35,6 +37,10 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::put('/users/profile', [UserController::class, 'updateProfilePicture']);
 Route::post('/items', [ItemController::class, 'store']);
 Route::put('/items/{id}', [ItemController::class, 'update']);
+Route::resource('reviews', RevController::class);
+Route::get('/items/user/{id}',[ItemController::class, 'getUserItems']);
+
+
 
 
 

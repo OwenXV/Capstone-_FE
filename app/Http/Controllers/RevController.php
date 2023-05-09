@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Review;
 
 class RevController extends Controller
 {
@@ -19,7 +20,18 @@ class RevController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'item_id' => 'required|numeric',
+            'body' => 'required|string'
+       ]);
+
+       $review = review::create([
+            'user_id' => auth()->user()->id,
+            'item_id' => $fields['item_id'],
+            'body' => $fields['body']
+       ]);
+
+       return response($review, 201);
     }
 
     /**
@@ -35,7 +47,14 @@ class RevController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $fields = $request->validate([
+            'body' => 'required|string'
+        ]);
+        
+        $review = Review::find($id);
+        $review->update($request->all());
+
+        return response($review, 200);
     }
 
     /**
@@ -43,6 +62,13 @@ class RevController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+       
+        Review::destroy($id);
+
+        $response = [
+            'message' => 'Review deleted'
+        ];
+
+        return response($response, 200);
     }
 }

@@ -26,8 +26,8 @@ class Review extends Model
     }
 
 
-    public function item(): BelongsTo {
-        return $this->belongsTo(User::class);
+    public function items(): BelongsTo {
+        return $this->belongsTo(Item::class);
     }
 
 }

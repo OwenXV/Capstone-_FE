@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use App\Models\Review;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ItemResource extends JsonResource
