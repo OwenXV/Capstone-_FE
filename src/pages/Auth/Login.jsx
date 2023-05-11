@@ -1,8 +1,17 @@
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import React, { useState } from "react";
+import http from "../../lib/http";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({
+    email: [],
+    password: [],
+  });
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -11,9 +20,36 @@ const Login = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
   };
+  async function login(e) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!email || !password) {
+      return;
+    }
+    try {
+      const body = {
+        email,
+        password,
+      };
+      const res = await http.post("/login", body);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("token", res.data.token);
+      navigate("/");
+      navigate(0);
+    } catch (e) {
+      if (e.response.data.errors) {
+        setErrors({
+          email: e.response.data.errors.email,
+          password: e.response.data.errors?.password,
+        });
+      } else {
+        alert(e.response.data.message);
+      }
+    }
+  }
 
   return (
     <div className="LoginPage">
