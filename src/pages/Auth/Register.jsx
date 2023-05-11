@@ -7,7 +7,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
-  const [picture, setPicture] = useState("");
+  const [picture, setPicture] = useState();
   const [address, setAddress] = useState("");
   const [about, setAbout] = useState("");
   const [email, setEmail] = useState("");
@@ -40,12 +40,20 @@ const Register = () => {
       password,
       password_confirmation: passwordConfirmation,
     };
+    const formData = new FormData();
+    formData.append("profile_picture", picture);
+
     const res = await http.post("/register", body);
+    const uploadRes = await http.post("/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/formData",
+        Authorization: `Bearer ${localstStorage.getItem("Token")}`,
+      },
+    });
 
     localStorage.setItem("user", JSON.stringify(res.data.user));
     localStorage.setItem("token", res.data.token);
     navigate("/");
-    //    console.log(name, username,picture,email,address,about,email,password,passwordConfirmation)
   }
 
   return (
