@@ -14,21 +14,16 @@ const Login = () => {
   });
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
     setValidated(true);
-  };
-  async function login(e) {
-    event.preventDefault();
-    event.stopPropagation();
 
     if (!email || !password) {
       return;
     }
+
     try {
       const body = {
         email,
@@ -50,7 +45,6 @@ const Login = () => {
       }
     }
   }
-
   return (
     <div className="LoginPage">
       <Container className="d-flex justify-content-center py-5">
@@ -71,9 +65,11 @@ const Login = () => {
                         required
                         type="email"
                         placeholder="Enter email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                       <Form.Control.Feedback type="invalid">
-                        Please Enter email.
+                        Enter email.
                       </Form.Control.Feedback>
                       <Form.Control.Feedback></Form.Control.Feedback>
                     </Form.Group>
@@ -83,11 +79,12 @@ const Login = () => {
                         required
                         type="password"
                         placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                       <Form.Control.Feedback type="invalid">
-                        Please Enter Password.
+                        Please enter a valid Password.
                       </Form.Control.Feedback>
-                      <Form.Control.Feedback></Form.Control.Feedback>
                     </Form.Group>
                     <Row className="d-flex align-items-center">
                       <Col>

@@ -13,9 +13,24 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [errors, setErrors] = useState({
+    name: [],
+    username: [],
+    address: [],
+    about: [],
+    email: [],
+    picture: [],
+    password: [],
+    passwordConfirmation: [],
+  });
+  const [validated, setValidated] = useState(false);
 
   async function register(e) {
     e.preventDefault();
+    e.stopPropagation();
+
+    setValidated(true);
+
     if (
       !name ||
       !username ||
@@ -26,34 +41,42 @@ const Register = () => {
       !passwordConfirmation ||
       !(password === passwordConfirmation)
     ) {
-      alert("Field Required");
       return;
     }
-
-    const body = {
-      name,
-      username,
-      profile_picture: picture,
-      adress: address,
-      seller_description: about,
-      email,
-      password,
-      password_confirmation: passwordConfirmation,
-    };
-    const formData = new FormData();
-    formData.append("profile_picture", picture);
-
-    const res = await http.post("/register", body);
-    const uploadRes = await http.post("/upload", formData, {
-      headers: {
-        "Content-Type": "multipart/formData",
-        Authorization: `Bearer ${localstStorage.getItem("Token")}`,
-      },
-    });
-
-    localStorage.setItem("user", JSON.stringify(res.data.user));
-    localStorage.setItem("token", res.data.token);
-    navigate("/");
+    try {
+      const body = {
+        name,
+        username,
+        profile_picture: picture,
+        adress: address,
+        seller_description: about,
+        email,
+        password,
+        password_confirmation: passwordConfirmation,
+      };
+      const res = await http.post("/register", body);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("token", res.data.token);
+      navigate("/");
+      navigate(0);
+    } catch (e) {
+      if (e.response.data.errors) {
+        setErrors({
+          name: e.response.data.errors.name ? e.response.data.errors.name : [],
+          email: e.response.data.errors.email
+            ? e.response.data.errors.email
+            : [],
+          password: e.response.data.errors.password
+            ? e.response.data.errors.password
+            : [],
+          passwordConfirmation: e.response.data.errors.password_confirmation
+            ? e.response.data.errors.password_confirmation
+            : [],
+        });
+      } else {
+        alert(e.response.data.message);
+      }
+    }
   }
 
   return (
@@ -75,6 +98,11 @@ const Register = () => {
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Name"
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.name.map((error, index) => {
+                          return <p key={index}>{error}</p>;
+                        })}
+                      </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="RegisterUsername">
                       <Form.Control
@@ -83,6 +111,11 @@ const Register = () => {
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="Username"
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.username.map((error, index) => {
+                          return <p key={index}>{error}</p>;
+                        })}
+                      </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="RegisterPicture">
                       <Form.Control
@@ -90,6 +123,11 @@ const Register = () => {
                         onChange={(e) => setPicture(e.target.files[0])}
                         placeholder="Profile Picture"
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.picture.map((error, index) => {
+                          return <p key={index}>{error}</p>;
+                        })}
+                      </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="RegisterAddress">
                       <Form.Control
@@ -98,6 +136,11 @@ const Register = () => {
                         onChange={(e) => setAddress(e.target.value)}
                         placeholder="Street, City, Zipcode"
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.address.map((error, index) => {
+                          return <p key={index}>{error}</p>;
+                        })}
+                      </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="RegisterAbout">
                       <Form.Control
@@ -107,6 +150,11 @@ const Register = () => {
                         onChange={(e) => setAbout(e.target.value)}
                         placeholder="Tell us about yourself"
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.about.map((error, index) => {
+                          return <p key={index}>{error}</p>;
+                        })}
+                      </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="RegisterEmail">
                       <Form.Control
@@ -115,6 +163,11 @@ const Register = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter email"
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.email.map((error, index) => {
+                          return <p key={index}>{error}</p>;
+                        })}
+                      </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="RegisterPassword">
                       <Form.Control
@@ -123,6 +176,11 @@ const Register = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.password.map((error, index) => {
+                          return <p key={index}>{error}</p>;
+                        })}
+                      </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group
                       className="mb-3"
@@ -136,6 +194,11 @@ const Register = () => {
                         }
                         placeholder="Confirm Password"
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.passwordConfirmation.map((error, index) => {
+                          return <p key={index}>{error}</p>;
+                        })}
+                      </Form.Control.Feedback>
                     </Form.Group>
                     <Row className="d-flex align-items-center">
                       <Col>
