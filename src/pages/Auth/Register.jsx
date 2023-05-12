@@ -14,7 +14,7 @@ const Register = () => {
   const [image, setImage] = useState();
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  
+
   const [err, setError] = useState({
     name: [],
     username: [],
@@ -24,16 +24,12 @@ const Register = () => {
     email: [],
     password: [],
     passwordConfirmation: [],
-    
-
   });
-  
 
   async function register(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    
     try {
       let imageName = "";
       if (image) {
@@ -57,29 +53,15 @@ const Register = () => {
       };
       const res = await http.post("/register", body);
 
-      if (res.status === 200 ) {
-
+      if (res.status === 200) {
         localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("token", res.data.token);
         navigate("/");
         navigate(0);
       }
-
+    } catch (e) {
+      console.log(e);
     }
-    catch (e) {
-
-      console.log(e)
-
-    }
-
-
-
-
-
-
-
-   
-
   }
 
   return (
@@ -130,7 +112,7 @@ const Register = () => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="RegisterPicture">
                       <Form.Control
-                        required                    
+                        required
                         type="file"
                         placeholder="Profile Picture"
                         onChange={(e) => setImage(e.target.files[0])}
