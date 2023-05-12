@@ -1,81 +1,103 @@
-@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&family=Karla:wght@300&family=Lato:ital,wght@1,300&family=Roboto&display=swap');
-*{
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC&family=Karla:wght@300&family=Lato:ital,wght@1,300&family=Roboto&display=swap");
+* {
   box-sizing: border-box;
 }
 
-body{
+body {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto';
+  font-family: "Roboto";
 }
 
-.navibar{
+.navibar {
   height: 80px;
-  background-color:#A792B3;
+  background-color: #a792b3;
 }
-.offCan{
-  background-color: #3D3C3A;
+.offCan {
+  background-color: #3d3c3a;
 }
 
-#heroVid{
+#heroVid {
   width: 100% !important;
   height: auto !important;
   position: relative;
 }
 
-.navbar-toggler-icon{
-  filter:invert(80)
-  }
+.navbar-toggler-icon {
+  filter: invert(80);
+}
 
-.navibar > span{
-    background-color: black;
-    background-size: 70px;
-  }
+.navibar > span {
+  background-color: black;
+  background-size: 70px;
+}
 
-  .regPage{
-    background-color: #FFFFED;
-  }
+.regPage {
+  background-color: #ffffed;
+}
 
-.LoginPage{
-  background-color: #FFFCF7 ;
+.LoginPage {
+  background-color: #fffcf7;
   height: 74vh;
 }
-.LoginContainer{
+.LoginContainer {
   height: 54vh;
+}
+.LoginContainer > .btn-Login {
+  background-color: #3d3c3a;
+}
 
+.btn-Login {
+  background-color: #a792b3;
+  border-color: #a792b3;
 }
-.LoginContainer> .btn-Login{
-  background-color: #3D3C3A;
-}
-
-.btn-Login{
-  background-color: #A792B3;
-  border-color:#A792B3;
-}
-.text-login{
-  color: #0096FF;
+.text-login {
+  color: #0096ff;
   text-decoration: none;
   cursor: pointer;
-
 }
-.RegisterPage{
-  background-color: #FFFCF7 ;
+.RegisterPage {
+  background-color: #fffcf7;
   height: 74vh;
 }
-.RegisterContainer{
+.RegisterContainer {
   height: 54vh;
 }
 
-.btn-Register{
-  background-color: #A792B3;
-  border-color:#A792B3;
+.btn-Register {
+  background-color: #a792b3;
+  border-color: #a792b3;
 }
 
-  #footer-sec{
-    background-color:#92A1B3;
-  }
+/* home */
 
-  #footer-sec p{
-  color:#F7FBFF;
+.swiper {
+  width: 100%;
+  height: 100%;
+}
 
-  }
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#footer-sec {
+  background-color: #92a1b3;
+}
+
+#footer-sec p {
+  color: #f7fbff;
+}

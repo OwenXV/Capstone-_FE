@@ -17,6 +17,8 @@ const Register = () => {
 
   async function register(e) {
     e.preventDefault();
+    e.stopPropagation();
+
     if (
       !name ||
       !username ||
@@ -41,14 +43,15 @@ const Register = () => {
     //   password,
     //   passwordConfirmation
     // );
-    // let imageName = "";
-    // if (picture) {
-    //   const formData = new formData();
-    //   formData.append("image", picture);
 
-    //   const imgRes = await http.post("/upload", formData);
-    //   image_name = res.data.image_name;
-    // }
+    let imageName = "";
+    if (image) {
+      const formData = new formData();
+      formData.append("image", image);
+
+      const imgRes = await http.post("/upload", formData);
+      image_name = res.data.image_name;
+    }
     const body = {
       name,
       username,
