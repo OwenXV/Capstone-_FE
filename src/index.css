@@ -58,10 +58,11 @@ body {
 }
 .RegisterPage {
   background-color: #fffcf7;
-  height: 74vh;
+  height: 120vh;
 }
 .RegisterContainer {
-  height: 54vh;
+  height: auto;
+  padding-top: 80px;
 }
 
 .btn-Register {

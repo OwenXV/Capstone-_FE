@@ -14,65 +14,76 @@ const Register = () => {
   const [picture, setPicture] = useState();
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [image, setImage] = useState();
+  const [err, setError] = useState({
+    name: [],
+    username: [],
+    address: [],
+    about: [],
+    email: [],
+    password: [],
+    passwordConfirmation: [],
+    
+
+  });
+  
 
   async function register(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (
-      !name ||
-      !username ||
-      !email ||
-      !address ||
-      !about ||
-      !picture ||
-      !password ||
-      !passwordConfirmation ||
-      password !== passwordConfirmation
-    ) {
-      alert("Invalid Data");
-      return;
+    
+    try {
+      let imageName = "";
+
+      if (image) {
+        const formData = new FormData();
+        formData.append("image", image)
+
+        const res = await http.post("/upload", formData)
+
+        imageName = res.data.image_name
+      }
+
+      const body = {
+        name: name,
+        username: username,
+        email,
+        adress: address,
+        seller_description: about,
+        profile_picture: image,
+        password,
+        password_confirmation: passwordConfirmation,
+      };
+      const res = await http.post("/register", body);
+
+      if (res.status === 200 ) {
+
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem("token", res.data.token);
+        navigate("/");
+      }
+
     }
-    // console.log(
-    //   name,
-    //   username,
-    //   email,
-    //   address,
-    //   about,
-    //   picture,
-    //   password,
-    //   passwordConfirmation
-    // );
+    catch (e) {
 
-    let imageName = "";
-    if (image) {
-      const formData = new formData();
-      formData.append("image", image);
+      console.log(e)
 
-      const imgRes = await http.post("/upload", formData);
-      image_name = res.data.image_name;
     }
-    const body = {
-      name,
-      username,
-      email,
-      adress: address,
-      seller_description: about,
-      profile_picture: picture,
-      password,
-      password_confirmation: passwordConfirmation,
-    };
 
-    const res = await http.post("/register", body);
 
-    localStorage.setItem("user", JSON.stringify(res.data.user));
-    localStorage.setItem("token", res.data.token);
-    navigate("/");
+
+
+
+
+
+   
+
   }
 
   return (
     <div className="RegisterPage">
-      <Container className="d-flex justify-content-center py-5">
+      <Container className="d-flex justify-content-center">
         <div className="RegisterContainer d-flex align-items-center">
           <Card style={{ width: "25rem" }} className="RegisterCard">
             <Card.Body>
@@ -121,7 +132,7 @@ const Register = () => {
                         required
                         type="file"
                         placeholder="Profile Picture"
-                        onChange={(e) => setPicture(e.target.files[0])}
+                        onChange={(e) => setImage(e.target.files[0])}
                       />
                       <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
                     </Form.Group>
