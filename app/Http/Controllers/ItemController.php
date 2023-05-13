@@ -12,7 +12,7 @@ use App\Http\Resources\ItemShowResource;
 use App\Http\Resources\ItemResource;
 use App\Http\Requests\ItemStoreRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Illuminate\Validation\Rules\Enum;
 
 class ItemController extends Controller
 {
@@ -23,7 +23,7 @@ class ItemController extends Controller
     {
         $order = $request->query('order') ? $request->query('order') : 'desc';
 
-        return ItemResource::collection(Item::select('id', 'user_id','name','image','description','price', 'created_at', 'updated_at')
+        return ItemResource::collection(Item::select('id', 'user_id','name','category', 'image','description','price', 'created_at', 'updated_at')
             ->orderBy('created_at', $order)
             ->paginate(5));
     }
@@ -49,6 +49,7 @@ class ItemController extends Controller
             Item::create([
                 'user_id' => auth()->user()->id,
                 'name' => $request->name,
+                'category' => $request->category,
                 'image' => $imageName,
                 'description' => $request->description,
                 'price' => $request->price
@@ -85,6 +86,10 @@ class ItemController extends Controller
         return response(ItemShowResource::make(Item::find($id)), 200);
     }
 
+
+   
+
+
     /**
      * Update the specified resource in storage.
      */
@@ -116,9 +121,9 @@ class ItemController extends Controller
     // @param str $name
     // @return \Illuminate\Http\Response
 
-    public function search($name)
+    public function search($category)
 {
-    return Item::where('name', 'like', '%' .$name. '%')->get();
+    return Item::where('category', 'like', '%' .$category. '%')->get();
 }
     
     

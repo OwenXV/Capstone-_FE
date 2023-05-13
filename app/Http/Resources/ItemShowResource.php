@@ -20,6 +20,7 @@ class ItemShowResource extends JsonResource
        return [
         'id' => $this->id,
         'name' => $this->name,
+        'category' =>$this->category,
         'image' => $this->image,
         'description' => $this->description,
         'price' => $this->price,
