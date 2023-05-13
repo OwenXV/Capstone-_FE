@@ -5,6 +5,7 @@ import { Container, Form, Button } from "react-bootstrap";
 import { Navbar, Nav } from "react-bootstrap";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import buy from "../assets/buy.png";
+import http from "../lib/http";
 
 const Navibar = () => {
   const navigate = useNavigate();
@@ -56,8 +57,8 @@ const Navibar = () => {
                   <Nav.Link href="/" className="text-white fs-5">
                     Home
                   </Nav.Link>
-                  <Nav.Link href="/Home" className="text-white fs-5">
-                    Categories
+                  <Nav.Link href="/Shop" className="text-white fs-5">
+                    Shop
                   </Nav.Link>
                 </Nav>
                 <Form className="d-flex">
@@ -73,9 +74,9 @@ const Navibar = () => {
                 <Nav className="mr-auto">
                   {isLoggedIn ? (
                     <>
-                      <Nav.Link href="/Profile" className="text-white fs-5">
+                      {/* <Nav.Link href="/Profile" className="text-white fs-5">
                         Profile
-                      </Nav.Link>
+                      </Nav.Link> */}
                       <Nav.Link onClick={logout} className="text-white fs-5">
                         Logout
                       </Nav.Link>
@@ -90,7 +91,7 @@ const Navibar = () => {
                       </Nav.Link>
                     </>
                   )}
-                  <Nav.Link href="/Home" className="text-white fs-5">
+                  <Nav.Link href="/Sell" className="text-white fs-5">
                     <span>Sell</span>
                   </Nav.Link>
                 </Nav>

@@ -60,7 +60,7 @@ const Register = () => {
         navigate(0);
       }
     } catch (e) {
-      console.log(e);
+      alert(e.response.data.message);
     }
   }
 

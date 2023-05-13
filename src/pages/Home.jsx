@@ -69,7 +69,7 @@ const Home = () => {
           </Col>
         </Row>
 
-        <Row className="my-4">
+        <Row className="my-5 mb-5">
           <Col>
             <Swiper
               slidesPerView={2}
@@ -84,7 +84,7 @@ const Home = () => {
                 <img src={sale1} alt="" />
               </SwiperSlide>
               <SwiperSlide>
-                <img src={sale3} alt="" />
+                <img src={sale2} alt="" />
               </SwiperSlide>
               <SwiperSlide>
                 <img src={sale3} alt="" />

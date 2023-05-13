@@ -2,7 +2,10 @@ import React from "react";
 import Home from "./pages/Home";
 import Register from "./pages/Auth/Register";
 import Login from "./pages/Auth/Login";
-import Profile from "./pages/Profile";
+import Sell from "./pages/Sell";
+import Shop from "./pages/Shop";
+
+// import Profile from "./pages/Profile";
 
 const routes = [
   {
@@ -18,8 +21,12 @@ const routes = [
     element: <Login />,
   },
   {
-    path: "/Profile",
-    element: <Profile />,
+    path: "/Shop",
+    element: <Shop />,
+  },
+  {
+    path: "/Sell",
+    element: <Sell />,
   },
 ];
 
