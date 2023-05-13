@@ -74,9 +74,6 @@ const Navibar = () => {
                 <Nav className="mr-auto">
                   {isLoggedIn ? (
                     <>
-                      {/* <Nav.Link href="/Profile" className="text-white fs-5">
-                        Profile
-                      </Nav.Link> */}
                       <Nav.Link onClick={logout} className="text-white fs-5">
                         Logout
                       </Nav.Link>
