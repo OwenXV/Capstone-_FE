@@ -12,6 +12,11 @@ const Sell = () => {
             <Card.Body>
               <Form>
                 <Row>
+                  <Col lg={12} className="d-flex justify-content-center">
+                    <Form.Group className="mb-3" controlId="ProductPicture">
+                      <Form.Control type="file" placeholder="Product Picture" />
+                    </Form.Group>
+                  </Col>
                   <Col lg={12}>
                     <Form.Group className="mb-3" controlId="formProductName">
                       <Form.Label>Product Name:</Form.Label>
