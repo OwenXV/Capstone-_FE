@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserStoreRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
 
 class AuthController extends Controller
 {
@@ -20,7 +22,7 @@ class AuthController extends Controller
         $fields = $request->validate([
             'name' => 'required|string',
             'username' => 'required|string',
-            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'profile_picture' => 'required|string',
             'adress' => 'required|string',
             'seller_description' => 'required|string',
             'email' => 'required|string|unique:users|email',
@@ -29,22 +31,18 @@ class AuthController extends Controller
            
         ]);
 
-        $image_name = Str::random(32).".".$request->profile_picture->getClientOriginalExtension();
+        
 
         $user = User::create([
             'name' => $fields['name'],
             'username' => $fields['username'],
-            'profile_picture' => $image_name,
+            'profile_picture' => $fields['profile_picture'],
             'adress' => $fields[ 'adress'],
             'seller_description' => $fields['seller_description'],
             'email' => $fields['email'],
             'password' => bcrypt($fields['password'])
         ]);
 
-
-        $request->profile_picture->move(storage_path('app/public/images'), $image_name);
-
-        // Storage::disk('public')->put($imageName, file_get_contents($request->profile_picture));
 
         $token = $user->createToken('mySecretKey')->plainTextToken;
 
@@ -107,6 +105,12 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
+
+       
+
+
+
+
         auth()->user()->tokens()->delete();
 
         $response = [

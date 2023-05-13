@@ -27,7 +27,7 @@ class UserStoreRequest extends FormRequest
             return [
                 'name' => 'required|string',
                 'username' => 'required|string',
-                'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+                'profile_picture' => 'required|string',
                 'adress' => 'required|string',
                 'seller_description' => 'required|string',
                 'email' => 'required|string|unique:users|email',
@@ -45,7 +45,7 @@ class UserStoreRequest extends FormRequest
             return [
                 'name' => 'required|string',
                 'username' => 'required|string',
-                'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+                'profile_picture' => 'required|string',
                 'adress' => 'required|string',
                 'seller_description' => 'required|string',
                 'email' => 'required|string|unique:users|email',

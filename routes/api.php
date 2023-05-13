@@ -19,16 +19,14 @@ use App\Http\Controllers\RevController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-// Route::get('/items', [ItemController::class, 'index']);
-// Route::post('/items', [ItemController::class, 'store']);
-Route:post('/upload', [ImageController::class, 'upload']);
+
+Route::post('/upload', [ImageController::class, 'upload']);
 Route::get('items', [ItemController::class, 'index']);
 Route::get('items/{id}', [ItemController::class, 'show']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('users', [UserController::class, 'index']);
 Route::get('/image/{image}', [ImageController::class, 'getImage'])->where('image', '.*');
-// Route::resource('items', UserController::class);
 Route::get('/profile_picture/{image}', [AuthController::class, 'getImage'])->where('profile_picture', '.*');
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
