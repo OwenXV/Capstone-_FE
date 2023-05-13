@@ -1,56 +1,68 @@
 import { Button, Container, Card, Col, Row, Form } from "react-bootstrap";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import http from "../lib/http";
 
 const Sell = () => {
+  const [validated, setValidated] = useState(false);
   const [productPhoto, setProductPhoto] = useState();
   const [productName, setProductName] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productDescription, setProductDescription] = useState("");
 
-  const [err, setError] = useState({
-    productImage: [],
-    productName: [],
-    productCategory: [],
-    productDescription: [],
-    productPrice: [],
-    productPhoto: [],
-  });
-
   async function postItem(e) {
     e.preventDefault();
     e.stopPropagation();
 
+    setValidated(true);
+
+    if (
+      !productPhoto ||
+      !productName ||
+      !productCategory ||
+      !productDescription ||
+      !productPrice ||
+      !productPhoto
+    ) {
+      return;
+    }
+
     try {
-      let imageName = "";
-      if (image) {
-        const formData = new FormData();
-        formData.append("image", image);
+      const formData = new FormData();
+      formData.append("image", productPhoto);
 
-        const res = await http.post("/upload", formData);
+      const imageRes = await http.post("/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
-        imageName = res.data.image_name;
+      if (imageRes.status == 201) {
+        const postBody = {
+          name: productName,
+          category: productCategory,
+          image: imageRes.data.image_name,
+          description: productDescription,
+          price: productPrice,
+        };
+
+        const res = await http.post("/items", postBody, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
       }
 
-      const body = {
-        name: productName,
-        category: productCategory,
-        image: productPhoto,
-        description: productDescription,
-        price: productPrice,
-      };
-      const res = await http.post("/post", body);
-
-      if (res.status === 201) {
-        navigate("/");
-        navigate(0);
-      }
+      navigate(`/${res.data.id}`);
     } catch (e) {
-      alert(e.response.data.message);
+      console.log(e);
     }
   }
+
   return (
     <div className="sellPage">
       <Container className="justify-content-center">
@@ -65,9 +77,10 @@ const Sell = () => {
                   <Col lg={12} className="d-flex justify-content-center">
                     <Form.Group className="mb-3" controlId="ProductPicture">
                       <Form.Control
+                        required
                         type="file"
                         placeholder="Product Picture"
-                        onChange={(e) => setImage(e.target.files[0])}
+                        onChange={(e) => setProductPhoto(e.target.files[0])}
                       />
                     </Form.Group>
                   </Col>
@@ -75,6 +88,7 @@ const Sell = () => {
                     <Form.Group className="mb-3" controlId="formProductName">
                       <Form.Label>Product Name:</Form.Label>
                       <Form.Control
+                        required
                         type="text"
                         placeholder="Enter a Product name."
                         onChange={(e) => setProductName(e.target.value)}
@@ -88,6 +102,7 @@ const Sell = () => {
                     >
                       <Form.Label>Category:</Form.Label>
                       <Form.Control
+                        required
                         type="text"
                         placeholder="Enter a Product Category."
                         onChange={(e) => setProductCategory(e.target.value)}
@@ -98,6 +113,7 @@ const Sell = () => {
                     <Form.Group className="mb-3" controlId="formPrice">
                       <Form.Label>Price:</Form.Label>
                       <Form.Control
+                        required
                         type="number"
                         min="0"
                         max="999999"
@@ -110,6 +126,7 @@ const Sell = () => {
                     <Form.Group className="mb-3" controlId="formProductName">
                       <Form.Label>Product Description:</Form.Label>
                       <Form.Control
+                        required
                         as="textarea"
                         rows={4}
                         placeholder="Describe your product."
@@ -120,7 +137,7 @@ const Sell = () => {
                   <Col lg={12} className="d-flex justify-content-end">
                     <Button type="submit" className="btn-sell">
                       {" "}
-                      Post
+                      Post Item
                     </Button>
                   </Col>
                 </Row>
