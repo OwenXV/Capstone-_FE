@@ -11,14 +11,15 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [about, setAbout] = useState("");
-  const [picture, setPicture] = useState();
+  const [image, setImage] = useState();
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [image, setImage] = useState();
+  
   const [err, setError] = useState({
     name: [],
     username: [],
     address: [],
+    profile_picture: [],
     about: [],
     email: [],
     password: [],
@@ -35,14 +36,13 @@ const Register = () => {
     
     try {
       let imageName = "";
-
       if (image) {
         const formData = new FormData();
-        formData.append("image", image)
+        formData.append("image", image);
 
-        const res = await http.post("/upload", formData)
+        const res = await http.post("/upload", formData);
 
-        imageName = res.data.image_name
+        imageName = res.data.image_name;
       }
 
       const body = {
@@ -51,7 +51,7 @@ const Register = () => {
         email,
         adress: address,
         seller_description: about,
-        profile_picture: image,
+        profile_picture: imageName,
         password,
         password_confirmation: passwordConfirmation,
       };
@@ -62,6 +62,7 @@ const Register = () => {
         localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("token", res.data.token);
         navigate("/");
+        navigate(0);
       }
 
     }
@@ -122,14 +123,14 @@ const Register = () => {
                         required
                         type="text"
                         placeholder="Street, City, Zipcode"
-                        vaue={address}
+                        value={address}
                         onChange={(e) => setAddress(e.target.value)}
                       />
                       <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="RegisterPicture">
                       <Form.Control
-                        required
+                        required                    
                         type="file"
                         placeholder="Profile Picture"
                         onChange={(e) => setImage(e.target.files[0])}
