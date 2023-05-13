@@ -121,9 +121,14 @@ class ItemController extends Controller
     // @param str $name
     // @return \Illuminate\Http\Response
 
-    public function search($category)
+    public function searchCategory($category)
 {
     return Item::where('category', 'like', '%' .$category. '%')->get();
+}
+
+public function search($name)
+{
+    return Item::where('name', 'like', '%' .$name. '%')->get();
 }
     
     

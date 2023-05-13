@@ -22,7 +22,8 @@ use App\Http\Controllers\RevController;
 
 Route::post('/upload', [ImageController::class, 'upload']);
 Route::get('items', [ItemController::class, 'index']);
-Route::get('items/{category}', [ItemController::class, 'search']);
+Route::get('items/{name}', [ItemController::class, 'search']);
+Route::get('items/{category}', [ItemController::class, 'searchCategory']);
 Route::get('items/{id}', [ItemController::class, 'show']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
