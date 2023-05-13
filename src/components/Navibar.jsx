@@ -12,7 +12,7 @@ const Navibar = () => {
   const [isLoggedIn, _] = useState(localStorage.getItem("user"));
 
   async function logout() {
-    await http.post(
+    const res = await http.post(
       "/logout",
       {},
       {

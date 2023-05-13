@@ -53,7 +53,7 @@ const Register = () => {
       };
       const res = await http.post("/register", body);
 
-      if (res.status === 200) {
+      if (res.status === 201) {
         localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("token", res.data.token);
         navigate("/");

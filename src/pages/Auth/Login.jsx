@@ -1,5 +1,4 @@
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import http from "../../lib/http";
 import { useNavigate } from "react-router-dom";
@@ -35,6 +34,7 @@ const Login = () => {
       navigate("/");
       navigate(0);
     } catch (e) {
+      console.log(e);
       if (e.response.data.errors) {
         setErrors({
           email: e.response.data.errors.email,
