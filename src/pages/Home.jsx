@@ -15,10 +15,10 @@ const Home = () => {
   return (
     <div>
       <Container>
-        <Row className="my-4">
+        <Row className="pt-4 d-flex justify-content-center">
           <Col>
             <Swiper
-              spaceBetween={30}
+              spaceBetween={10}
               autoplay={{
                 delay: 2500,
                 disableOnInteraction: false,
@@ -30,41 +30,41 @@ const Home = () => {
               className="mySwiper"
             >
               <SwiperSlide>
-                <img src={banner} alt="" />
+                <img src={banner} alt="" id="home-banner" />
               </SwiperSlide>
               <SwiperSlide>
-                <img src={banner} alt="" />
+                <img src={banner} alt="" id="home-banner" />
               </SwiperSlide>
               <SwiperSlide>
-                <img src={banner} alt="" />
+                <img src={banner} alt="" id="home-banner" />
               </SwiperSlide>
             </Swiper>
           </Col>
         </Row>
         <h3>Featured Categories</h3>
-        <Row className="my-4">
+        <Row className="my-4 text-center">
           <Col>
             <Card style={{ width: "18rem" }}>
               <Card.Img src={product} />
-              Property 10,000+ listings
+              Product 10,000+ listings
             </Card>
           </Col>
           <Col>
             <Card style={{ width: "18rem" }}>
               <Card.Img src={product} />
-              Property 10,000+ listings
+              Product 10,000+ listings
             </Card>
           </Col>
           <Col>
             <Card style={{ width: "18rem" }}>
               <Card.Img src={product} />
-              Property 10,000+ listings
+              Product 10,000+ listings
             </Card>
           </Col>
           <Col>
             <Card style={{ width: "18rem" }}>
               <Card.Img src={product} />
-              Property 10,000+ listings
+              Product 10,000+ listings
             </Card>
           </Col>
         </Row>
@@ -78,7 +78,7 @@ const Home = () => {
                 clickable: true,
               }}
               modules={[Pagination]}
-              className="mySwiper"
+              className="bottom-banner"
             >
               <SwiperSlide>
                 <img src={sale1} alt="" />

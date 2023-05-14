@@ -4,6 +4,7 @@ import Register from "./pages/Auth/Register";
 import Login from "./pages/Auth/Login";
 import Sell from "./pages/Sell";
 import Shop from "./pages/Shop";
+import item from "./pages/item";
 
 // import Profile from "./pages/Profile";
 
@@ -22,6 +23,10 @@ const routes = [
   },
   {
     path: "/Shop",
+    element: <Shop />,
+  },
+  {
+    path: "/:id",
     element: <Shop />,
   },
   {

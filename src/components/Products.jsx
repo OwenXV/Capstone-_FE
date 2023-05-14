@@ -4,8 +4,13 @@ import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 function Products({ productName, price, productImage }) {
   return (
     <>
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src={productImage} />
+      <Card style={{ width: "20rem" }}>
+        <Card.Img
+          id="product-img"
+          variant="top"
+          // style={{ height: "200px" }}
+          src={`http://localhost:8000/api/image/${productImage}`}
+        />
         <Card.Body>
           <Card.Title>{productName}</Card.Title>
           <Card.Text>

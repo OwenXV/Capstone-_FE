@@ -17,8 +17,13 @@ const Shop = () => {
   }, []);
   return (
     <div>
-      <Container className="pt-4">
-        <Row className="gap-3">
+      <Container className="pt-4 mb-5">
+        <Row
+          className="gap-3 d-flex justify-content-center"
+          xs={1}
+          md={2}
+          lg={4}
+        >
           {items.map((item, index) => {
             return (
               <Products
