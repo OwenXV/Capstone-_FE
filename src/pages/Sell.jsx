@@ -49,10 +49,7 @@ const Sell = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      if (res.status === 200) {
-        localStorage.setItem("user", JSON.stringify(res.data.user));
-        localStorage.setItem("token", res.data.token);    
-      }
+    
       console.log(name, category, image, description, price);
       navigate("/");
           navigate(0);
