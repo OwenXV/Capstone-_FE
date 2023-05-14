@@ -32,8 +32,6 @@ const Sell = () => {
         const res = await http.post("/upload", formData);
 
         imageName = res.data.image_name;
-     
-        
       }
 
       const postData = {
@@ -49,11 +47,10 @@ const Sell = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-    
+
       console.log(name, category, image, description, price);
       navigate("/");
-          navigate(0);
-      
+      navigate(0);
     } catch (e) {
       console.log(e);
     }
@@ -95,12 +92,23 @@ const Sell = () => {
                       controlId="formProductCategory"
                     >
                       <Form.Label>Category:</Form.Label>
-                      <Form.Control
-                        required
-                        type="text"
-                        placeholder="Enter a Product Category."
+                      <Form.Select
                         onChange={(e) => setCategory(e.target.value)}
-                      />
+                      >
+                        <option>Select product category</option>
+                        <option value="1">Apparel</option>
+                        <option value="2">Appliances</option>
+                        <option value="3">Bag</option>
+                        <option value="4">Cars</option>
+                        <option value="5">Jewelry</option>
+                        <option value="6">Laptop</option>
+                        <option value="7">Mobile</option>
+                        <option value="8">Notebook</option>
+                        <option value="8">Sneakers</option>
+                        <option value="10">Tablet</option>
+                        <option value="11">Gaming</option>
+                        <option value="12">Watches</option>
+                      </Form.Select>
                     </Form.Group>
                   </Col>
                   <Col lg={12}>
