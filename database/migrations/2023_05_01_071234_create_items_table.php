@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
-            $table->enum('category', ['lots', 'mobile phones', 'cars' , 'clothes', 'tools']);
+            $table->enum('category', ['Apparel','Appliances','Bag','Cars','Jewelry','Laptop','Mobile','Notebook','Sneakers','Tablet','Gaming
+','Watches']);
             $table->string('image');
             $table->text('description');
             $table->integer('price');

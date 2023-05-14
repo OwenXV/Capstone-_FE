@@ -25,7 +25,7 @@ class ItemController extends Controller
 
         return ItemResource::collection(Item::select('id', 'user_id','name','category', 'image','description','price', 'created_at', 'updated_at')
             ->orderBy('created_at', $order)
-            ->paginate(5));
+            ->paginate(12));
     }
 
 
