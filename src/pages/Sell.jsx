@@ -6,7 +6,7 @@ import http from "../lib/http";
 
 const Sell = () => {
   const [validated, setValidated] = useState(false);
-  const [productPhoto, setProductPhoto] = useState();
+  const [image, setImage] = useState();
   const [productName, setProductName] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productPrice, setProductPrice] = useState("");
@@ -19,44 +19,43 @@ const Sell = () => {
     setValidated(true);
 
     if (
-      !productPhoto ||
+      !image ||
       !productName ||
       !productCategory ||
       !productDescription ||
-      !productPrice ||
-      !productPhoto
+      !productPrice
     ) {
       return;
     }
 
     try {
-      const formData = new FormData();
-      formData.append("image", productPhoto);
-
-      const imageRes = await http.post("/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      if (imageRes.status == 201) {
-        const postBody = {
-          name: productName,
-          category: productCategory,
-          image: imageRes.data.image_name,
-          description: productDescription,
-          price: productPrice,
-        };
-
-        const res = await http.post("/items", postBody, {
+      let imageName;
+      if (image) {
+        const formData = new FormData();
+        formData.append("image", image);
+        const imageRes = await http.post("/upload", formData, {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
+        imageName = imageRes.data.image_name;
+        console.log(imageRes);
       }
 
+      const postBody = {
+        name: productName,
+        category: productCategory,
+        image: imageName,
+        description: productDescription,
+        price: productPrice,
+      };
+      const res = await http.post("/items", postBody, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       navigate(`/${res.data.id}`);
     } catch (e) {
       console.log(e);
@@ -80,7 +79,7 @@ const Sell = () => {
                         required
                         type="file"
                         placeholder="Product Picture"
-                        onChange={(e) => setProductPhoto(e.target.files[0])}
+                        onChange={(e) => setImage(e.target.files[0])}
                       />
                     </Form.Group>
                   </Col>
