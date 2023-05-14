@@ -7,22 +7,20 @@ function item() {
   const { id } = useParams();
   const [items, setItems] = useState({});
 
-  async function getItems() {
+  async function getItem() {
     const res = await http.get(`/items/${id}`);
-    getItems(res.data);
-    console.log(getItems);
+    getItem(res.data);
+    console.log(res.data);
   }
+
   useEffect(() => {
-    getItems();
+    getItem();
     return;
   }, []);
   return (
     <div>
-      {item && (
-        <>
-          <h1>{items.name}</h1>
-        </>
-      )}
+      single product page
+      {items.name}
     </div>
   );
 }

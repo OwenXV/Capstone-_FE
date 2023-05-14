@@ -26,7 +26,7 @@ const routes = [
     element: <Shop />,
   },
   {
-    path: "/:id",
+    path: "Shop/:id",
     element: <ShopItem />,
   },
   {

@@ -6,7 +6,7 @@ import Products from "../components/Products";
 const Shop = () => {
   const [items, setItems] = useState([]);
 
-  async function getItems(page = 1) {
+  async function getItems() {
     const res = await http.get("/items");
     setItems(res.data.data);
     console.log(res.data);
