@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 import http from "../lib/http";
 
 const Sell = () => {
+  const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const [image, setImage] = useState();
-  const [productName, setProductName] = useState("");
-  const [productCategory, setProductCategory] = useState("");
-  const [productPrice, setProductPrice] = useState("");
-  const [productDescription, setProductDescription] = useState("");
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
 
   async function postItem(e) {
     e.preventDefault();
@@ -18,44 +19,38 @@ const Sell = () => {
 
     setValidated(true);
 
-    if (
-      !image ||
-      !productName ||
-      !productCategory ||
-      !productDescription ||
-      !productPrice
-    ) {
+    if (!image || !name || !category || !description || !price) {
       return;
     }
 
     try {
-      let imageName;
-      if (image) {
-        const formData = new FormData();
-        formData.append("image", image);
-        const imageRes = await http.post("/upload", formData, {
+      const formData = new FormData();
+      formData.append("image", image);
+
+      let imageRes;
+      if (image)
+        imageRes = await http.post("/upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        imageName = imageRes.data.image_name;
-        console.log(imageRes);
+      if (imageRes.status === 201) {
+        const postData = {
+          name,
+          category,
+          image: imageRes.data.image_name,
+          description,
+          price,
+        };
+        const res = await http.post("/items", postData, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
       }
 
-      const postBody = {
-        name: productName,
-        category: productCategory,
-        image: imageName,
-        description: productDescription,
-        price: productPrice,
-      };
-      const res = await http.post("/items", postBody, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
       navigate(`/${res.data.id}`);
     } catch (e) {
       console.log(e);
@@ -90,7 +85,7 @@ const Sell = () => {
                         required
                         type="text"
                         placeholder="Enter a Product name."
-                        onChange={(e) => setProductName(e.target.value)}
+                        onChange={(e) => setName(e.target.value)}
                       />
                     </Form.Group>
                   </Col>
@@ -104,7 +99,7 @@ const Sell = () => {
                         required
                         type="text"
                         placeholder="Enter a Product Category."
-                        onChange={(e) => setProductCategory(e.target.value)}
+                        onChange={(e) => setCategory(e.target.value)}
                       />
                     </Form.Group>
                   </Col>
@@ -117,7 +112,7 @@ const Sell = () => {
                         min="0"
                         max="999999"
                         placeholder="PHP 0.00"
-                        onChange={(e) => setProductPrice(e.target.value)}
+                        onChange={(e) => setPrice(e.target.value)}
                       />
                     </Form.Group>
                   </Col>
@@ -129,7 +124,7 @@ const Sell = () => {
                         as="textarea"
                         rows={4}
                         placeholder="Describe your product."
-                        onChange={(e) => setProductDescription(e.target.value)}
+                        onChange={(e) => setDescription(e.target.value)}
                       />
                     </Form.Group>
                   </Col>
