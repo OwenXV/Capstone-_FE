@@ -24,39 +24,34 @@ const Sell = () => {
     }
 
     try {
-      let imageRes;
+      let imageName = "";
       if (image) {
         const formData = new FormData();
         formData.append("image", image);
 
-        const res = await http.post("/upload", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const res = await http.post("/upload", formData);
 
-        imageRes = res.data.image_name;
-        console.log(res);
-      }
-      if (imageRes.status === 200) {
-        localStorage.setItem("user", JSON.stringify(res.data.user));
-        localStorage.setItem("token", res.data.token);
-        const postData = {
-          name: name,
-          category: category,
-          image: imageRes,
-          description: description,
-          price: price,
-        };
-        console.log(name, category, image, description, price);
-        const res = await http.post("/items", postData, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        imageName = res.data.image_name;
+     
         
+      }
+
+      const postData = {
+        name: name,
+        category: category,
+        image: imageName,
+        description: description,
+        price: price,
+      };
+      const res = await http.post("/items", postData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (res.status === 200) {
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem("token", res.data.token);    
       }
       console.log(name, category, image, description, price);
       navigate("/");
