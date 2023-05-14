@@ -24,7 +24,7 @@ const Sell = () => {
     }
 
     try {
-      let imageRes = "";
+      let imageRes;
       if (image) {
         const formData = new FormData();
         formData.append("image", image);
@@ -40,12 +40,14 @@ const Sell = () => {
         console.log(res);
       }
       if (imageRes.status === 200) {
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem("token", res.data.token);
         const postData = {
-          name,
-          category,
+          name: name,
+          category: category,
           image: imageRes,
-          description,
-          price,
+          description: description,
+          price: price,
         };
         console.log(name, category, image, description, price);
         const res = await http.post("/items", postData, {
@@ -54,8 +56,12 @@ const Sell = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
+        
       }
-      navigate(`/${res.data.id}`);
+      console.log(name, category, image, description, price);
+      navigate("/");
+          navigate(0);
+      
     } catch (e) {
       console.log(e);
     }
