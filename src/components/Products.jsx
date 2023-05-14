@@ -1,7 +1,8 @@
 import React from "react";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-function Products({ productName, price, productImage }) {
+function Products({ productName, price, productImage, id }) {
   return (
     <>
       <Card style={{ width: "21rem" }} className="text-center px-0">
@@ -12,7 +13,12 @@ function Products({ productName, price, productImage }) {
           src={`http://localhost:8000/api/image/${productImage}`}
         />
         <Card.Body>
-          <Card.Title>{productName}</Card.Title>
+          <Card.Title>
+            <p className="fw-bold">
+              <Link to={`/${id}`}></Link>
+              {productName}
+            </p>
+          </Card.Title>
           <Card.Text>
             Price: Php <span>{price}</span>.00
           </Card.Text>

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import http from "../lib/http";
 import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
-import Products from "../components/products";
+import Products from "../components/Products";
 
 const Shop = () => {
   const [items, setItems] = useState([]);
 
-  async function getItems() {
+  async function getItems(page = 1) {
     const res = await http.get("/items");
     setItems(res.data.data);
-    console.log(res.data.data);
+    console.log(res.data);
   }
   useEffect(() => {
     getItems();
@@ -28,6 +28,7 @@ const Shop = () => {
             return (
               <Products
                 key={index}
+                id={item.id}
                 productImage={item.image}
                 productName={item.name}
                 price={item.price}

@@ -1,10 +1,10 @@
 import React from "react";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Register from "./pages/Auth/Register";
 import Login from "./pages/Auth/Login";
 import Sell from "./pages/Sell";
 import Shop from "./pages/Shop";
-import item from "./pages/item";
+import ShopItem from "./pages/ShopItem/item";
 
 // import Profile from "./pages/Profile";
 
@@ -27,7 +27,7 @@ const routes = [
   },
   {
     path: "/:id",
-    element: <Shop />,
+    element: <ShopItem />,
   },
   {
     path: "/Sell",

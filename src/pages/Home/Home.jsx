@@ -5,11 +5,11 @@ import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import banner from "../assets/banner.jpeg";
-import product from "../assets/product.jpeg";
-import sale1 from "../assets/sale1.jpg";
-import sale2 from "../assets/sale2.jpg";
-import sale3 from "../assets/sale3.jpg";
+import banner from "../../assets/banner.jpeg";
+import product from "../../assets/product.jpeg";
+import sale1 from "../../assets/sale1.jpg";
+import sale2 from "../../assets/sale2.jpg";
+import sale3 from "../../assets/sale3.jpg";
 
 const Home = () => {
   return (
