@@ -24,25 +24,30 @@ const Sell = () => {
     }
 
     try {
-      const formData = new FormData();
-      formData.append("image", image);
+      let imageRes = "";
+      if (image) {
+        const formData = new FormData();
+        formData.append("image", image);
 
-      let imageRes;
-      if (image)
-        imageRes = await http.post("/upload", formData, {
+        const res = await http.post("/upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-      if (imageRes.status === 201) {
+
+        imageRes = res.data.image_name;
+        console.log(res);
+      }
+      if (imageRes.status === 200) {
         const postData = {
           name,
           category,
-          image: imageRes.data.image_name,
+          image: imageRes,
           description,
           price,
         };
+        console.log(name, category, image, description, price);
         const res = await http.post("/items", postData, {
           headers: {
             "Content-Type": "application/json",
@@ -50,13 +55,11 @@ const Sell = () => {
           },
         });
       }
-
       navigate(`/${res.data.id}`);
     } catch (e) {
       console.log(e);
     }
   }
-
   return (
     <div className="sellPage">
       <Container className="justify-content-center">
@@ -71,7 +74,6 @@ const Sell = () => {
                   <Col lg={12} className="d-flex justify-content-center">
                     <Form.Group className="mb-3" controlId="ProductPicture">
                       <Form.Control
-                        required
                         type="file"
                         placeholder="Product Picture"
                         onChange={(e) => setImage(e.target.files[0])}
