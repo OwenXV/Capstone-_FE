@@ -4,11 +4,11 @@ import { Form, Button, Container, Row, Col, Card } from "react-bootstrap";
 function Products({ productName, price, productImage }) {
   return (
     <>
-      <Card style={{ width: "20rem" }}>
+      <Card style={{ width: "21rem" }} className="text-center px-0">
         <Card.Img
+          className="d-flex justify-content-center"
           id="product-img"
           variant="top"
-          // style={{ height: "200px" }}
           src={`http://localhost:8000/api/image/${productImage}`}
         />
         <Card.Body>

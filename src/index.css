@@ -103,7 +103,8 @@ body {
 
 #product-img {
   object-fit: cover;
-  width: 100%;
+  object-position: center;
+
   height: 200px;
 }
 

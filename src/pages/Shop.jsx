@@ -19,10 +19,10 @@ const Shop = () => {
     <div>
       <Container className="pt-4 mb-5">
         <Row
-          className="gap-3 d-flex justify-content-center"
+          className="gap-4 d-flex justify-content-center"
           xs={1}
           md={2}
-          lg={4}
+          lg={3}
         >
           {items.map((item, index) => {
             return (
