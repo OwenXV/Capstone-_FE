@@ -42,22 +42,19 @@ class ItemController extends Controller
     public function store(ItemStoreRequest $request)
     {
 
-        try {
-            $imageName = Str::random(32).".".$request->image->getClientOriginalExtension();
+       
 
             //Create Post
             Item::create([
                 'user_id' => auth()->user()->id,
                 'name' => $request->name,
                 'category' => $request->category,
-                'image' => $imageName,
+                'image' => $request->image,
                 'description' => $request->description,
                 'price' => $request->price
 
             ]);
-
-            //save image in folder
-            Storage::disk('public')->put($imageName, file_get_contents($request->image));
+          
 
             //return created
             return response()->json([
@@ -66,12 +63,10 @@ class ItemController extends Controller
 
 
 
-        } catch (\Exception $e) {
+        
             //Return Json Response
-            return response()->json([
-                'message' => "Review successfully posted!"
-            ],500);
-        }
+           
+        
 
 
     }

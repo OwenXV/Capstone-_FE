@@ -28,7 +28,7 @@ class UserController extends Controller
         'password' => 'required'
         ]);
         
-        return Item::create($request->all());
+        return User::create($request->all());
     }
 
 

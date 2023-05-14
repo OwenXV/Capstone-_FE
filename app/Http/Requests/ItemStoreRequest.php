@@ -25,7 +25,7 @@ class ItemStoreRequest extends FormRequest
         if(request()->isMethod('post')) {
             return [
                 'name' => 'required|string',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+                'image' => 'required|string',
                 'description' => 'required|string',
                 'price' => 'required|string'
             ];
@@ -34,7 +34,7 @@ class ItemStoreRequest extends FormRequest
         else {
             return [
                 'name' => 'required|string',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+                'image' => 'required|string',
                 'description' => 'required|string',
                 'price' => 'required|string'
 
